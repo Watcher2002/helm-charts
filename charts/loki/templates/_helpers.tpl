@@ -1203,7 +1203,7 @@ rules-{{ . | replace "_" "-" | trimSuffix "-" | lower }}
 monolithic replicas calculation
 */}}
 {{- define "loki.monolithicReplicas" -}}
-{{- $replicas := 1 }}
+{{- $replicas := min (int .Values.singleBinary.replicas) 1 }}
 {{- $usingObjectStorage := eq (include "loki.isUsingObjectStorage" .) "true" }}
 {{- if and $usingObjectStorage (gt (int .Values.singleBinary.replicas) 1)}}
 {{- $replicas = int .Values.singleBinary.replicas -}}
